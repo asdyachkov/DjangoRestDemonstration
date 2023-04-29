@@ -11,7 +11,7 @@ class Autor(models.Model):
         verbose_name = "Автор"
         verbose_name_plural = "Авторы"
         db_table = "autors"
-        ordering = ["birth_date"]
+        ordering = ["birth_date", "id"]
 
     def __str__(self):
         return f"{self.name} {self.surname}"
@@ -28,7 +28,7 @@ class Book(models.Model):
         verbose_name = "Книга"
         verbose_name_plural = "Книги"
         db_table = "books"
-        ordering = ["autor", "publish_date"]
+        ordering = ["autor", "publish_date", "id"]
 
     def __str__(self):
         return str(self.name)
