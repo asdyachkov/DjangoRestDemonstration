@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Autor, Book
+from django.contrib.auth.admin import UserAdmin
+
+from .models import Autor, Book, User
 
 
 class AutorAdmin(admin.ModelAdmin):
@@ -16,3 +18,4 @@ class BookAdmin(admin.ModelAdmin):
 
 admin.site.register(Autor, AutorAdmin)
 admin.site.register(Book, BookAdmin)
+admin.site.register(User, UserAdmin)

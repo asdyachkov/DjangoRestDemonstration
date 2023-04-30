@@ -1,15 +1,17 @@
-from django.forms import model_to_dict
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
 
-from .models import Book
+from .models import Book, Autor
 from .serializers import BooksGetSerializer, BookSerializer
 
 
 class BookApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = (IsAuthenticated, )
 
 
 class BooksApiView(generics.ListAPIView):
@@ -17,7 +19,17 @@ class BooksApiView(generics.ListAPIView):
     serializer_class = BooksGetSerializer
 
     def post(self, request):
-        serializer = BookSerializer(data=request.data)
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        User = get_user_model()
+        token = Token.objects.get(key=token)
+        user = User.objects.get(id=token.user_id)
+        try:
+            autor = Autor.objects.filter(name=user.first_name, surname=user.last_name).first()
+        except:
+            autor = Autor.objects.create(name=user.first_name, surname=user.last_name)
+        request.data.update(autor=autor.id)
+        serializer = BooksGetSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"added_book": serializer.data})
+

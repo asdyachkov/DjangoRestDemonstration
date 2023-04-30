@@ -4,6 +4,7 @@ from .models import Book
 
 
 class BookSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Book
         fields = "__all__"
@@ -21,8 +22,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class BooksGetSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Book
-        fields = ["id", "name"]
-
-
+        fields = ["id", "name", "autor", "publish_date"]
+        extra_kwargs = {'autor': {'write_only': True}, 'publish_date': {'write_only': True}}
