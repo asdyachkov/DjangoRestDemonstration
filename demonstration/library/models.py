@@ -3,10 +3,9 @@ from django.db import models
 
 
 class Autor(models.Model):
-
-    name = models.TextField(null=False, verbose_name='Имя')
-    surname = models.TextField(null=False, verbose_name='Фамилия')
-    birth_date = models.DateField(null=True, verbose_name='Дата рождения')
+    name = models.TextField(null=False, verbose_name="Имя")
+    surname = models.TextField(null=False, verbose_name="Фамилия")
+    birth_date = models.DateField(null=True, verbose_name="Дата рождения")
 
     class Meta:
         verbose_name = "Автор"
@@ -19,11 +18,12 @@ class Autor(models.Model):
 
 
 class Book(models.Model):
-
-    name = models.TextField(null=False, verbose_name='Имя')
-    autor = models.ForeignKey("Autor", null=False, on_delete=models.CASCADE, verbose_name='Автор')
-    description = models.TextField(null=False, verbose_name='Описание')
-    publish_date = models.DateField(null=False, verbose_name='Дата публикации')
+    name = models.TextField(null=False, verbose_name="Имя")
+    autor = models.ForeignKey(
+        "Autor", null=False, on_delete=models.CASCADE, verbose_name="Автор"
+    )
+    description = models.TextField(null=False, verbose_name="Описание")
+    publish_date = models.DateField(null=False, verbose_name="Дата публикации")
 
     class Meta:
         verbose_name = "Книга"
@@ -36,5 +36,4 @@ class Book(models.Model):
 
 
 class User(AbstractUser):
-
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'password']
+    REQUIRED_FIELDS = ["first_name", "last_name", "email", "password"]

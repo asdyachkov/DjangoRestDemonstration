@@ -12,7 +12,10 @@ class AutorAdmin(admin.ModelAdmin):
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "autor", "publish_date")
-    list_display_links = ("id", "name",)
+    list_display_links = (
+        "id",
+        "name",
+    )
     search_fields = ("name", "autor", "publish_date")
 
 

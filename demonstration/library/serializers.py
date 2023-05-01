@@ -4,11 +4,10 @@ from .models import Book
 
 
 class BookSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Book
         fields = "__all__"
-        read_only_fields = ['id']
+        read_only_fields = ["id"]
 
     def to_representation(self, instance):
         """
@@ -17,13 +16,15 @@ class BookSerializer(serializers.ModelSerializer):
         :return: Измененный объект для вывода
         """
         rep = super(BookSerializer, self).to_representation(instance)
-        rep['autor'] = f"{instance.autor.name} {instance.autor.surname}"
+        rep["autor"] = f"{instance.autor.name} {instance.autor.surname}"
         return rep
 
 
 class BooksGetSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Book
         fields = ["id", "name", "autor", "publish_date"]
-        extra_kwargs = {'autor': {'write_only': True}, 'publish_date': {'write_only': True}}
+        extra_kwargs = {
+            "autor": {"write_only": True},
+            "publish_date": {"write_only": True},
+        }
